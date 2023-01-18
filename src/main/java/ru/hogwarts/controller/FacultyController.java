@@ -50,12 +50,12 @@ public class FacultyController {
 
     @GetMapping("color/{color}")
     public ResponseEntity<Collection<Faculty>> filterByColor(@PathVariable String color) {
-        return ResponseEntity.ok(facultyService.getFilterByColor(color));
+        return ResponseEntity.ok(facultyService.getFilterFacultyByColor(color));
     }
 
     @GetMapping
     public ResponseEntity<Collection<Faculty>> getAllStudent () {
-        return ResponseEntity.ok(facultyService.getAllStudent());
+        return ResponseEntity.ok(facultyService.getAllFaculty());
     }
 
 

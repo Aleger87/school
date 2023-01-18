@@ -34,7 +34,7 @@ public class FacultyService {
         return null;
     }
 
-    public Collection<Faculty> getFilterByColor(String color) {
+    public Collection<Faculty> getFilterFacultyByColor(String color) {
         List<Faculty> list = new ArrayList<>();
         for (Faculty f: facultyMap.values()) {
             if (f.getColor().equals(color)) {
@@ -44,7 +44,7 @@ public class FacultyService {
         return list;
     }
 
-    public Collection<Faculty> getAllStudent() {
+    public Collection<Faculty> getAllFaculty() {
         List<Faculty> listFaculty =new ArrayList<>(facultyMap.values());
         return listFaculty;
     }
