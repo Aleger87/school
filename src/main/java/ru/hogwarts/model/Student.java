@@ -1,20 +1,33 @@
 package ru.hogwarts.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+
+@Entity
 public class Student {
-    private long id;
+    @Id
+    @GeneratedValue
+    private long idStudent;
+
     private String name;
     private int age;
 
-    public Student(long id, String name, int age) {
-        this.id = id;
+    public Student() {
+
+    }
+
+
+    public Student(long idStudent, String name, int age) {
+        this.idStudent = idStudent;
         this.name = name;
         this.age = age;
     }
 
-    public long getId() {
-        return id;
+    public long getIdStudent() {
+        return idStudent;
     }
 
     public String getName() {
@@ -25,8 +38,8 @@ public class Student {
         return age;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdStudent(long idStudent) {
+        this.idStudent = idStudent;
     }
 
     @Override
@@ -34,18 +47,18 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return age == student.age && Objects.equals(id, student.id) && Objects.equals(name, student.name);
+        return age == student.age && Objects.equals(idStudent, student.idStudent) && Objects.equals(name, student.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age);
+        return Objects.hash(idStudent, name, age);
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
+                "id=" + idStudent +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
