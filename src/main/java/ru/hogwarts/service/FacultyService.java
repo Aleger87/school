@@ -2,50 +2,42 @@ package ru.hogwarts.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.model.Faculty;
+import ru.hogwarts.repository.FacultyRepository;
 
 import java.util.*;
 
+
 @Service
 public class FacultyService {
-    private Map<Long, Faculty> facultyMap = new HashMap<>();
-    private long counter = 0;
+    private final FacultyRepository facultyRepository;
 
-    public Faculty postFaculty(Faculty faculty) {
-        faculty.setId(++counter);
-        facultyMap.put(counter, faculty);
-        return faculty;
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
     }
 
-    public Faculty deleteFaculty(long id) {
-        if (facultyMap.containsKey(id)) {
-            return facultyMap.remove(id);
-        }
-        return null;
+
+    public Faculty postFaculty(Faculty faculty) {
+       return facultyRepository.save(faculty);
+    }
+
+    public void deleteFaculty(long id) {
+        facultyRepository.deleteById(id);
     }
 
     public Faculty putFaculty(Faculty faculty) {
-        return facultyMap.put(faculty.getId(), faculty);
+        return facultyRepository.save(faculty);
     }
 
     public Faculty getFaculty(long id) {
-        if (facultyMap.containsKey(id)) {
-            return facultyMap.get(id);
-        }
-        return null;
+       return facultyRepository.findById(id).get();
     }
-
+    
     public Collection<Faculty> getFilterFacultyByColor(String color) {
-        List<Faculty> list = new ArrayList<>();
-        for (Faculty f: facultyMap.values()) {
-            if (f.getColor().equals(color)) {
-                list.add(f);
-            }
-        }
-        return list;
+        List<Faculty> getFilter =new ArrayList<>(facultyRepository.findAll());
+        return getFilter.stream().filter(e->e.getColor().equals(color)).toList();
     }
 
     public Collection<Faculty> getAllFaculty() {
-        List<Faculty> listFaculty =new ArrayList<>(facultyMap.values());
-        return listFaculty;
+        return facultyRepository.findAll();
     }
 }

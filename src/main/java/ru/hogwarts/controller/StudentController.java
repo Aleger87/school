@@ -26,7 +26,7 @@ public class StudentController {
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(studentService.deleteStudent(id));
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("{id}")
@@ -40,8 +40,8 @@ public class StudentController {
 
 
     @PutMapping
-    public Student putStudent(@RequestBody Student student) {
-        return studentService.putStudent(student);
+    public ResponseEntity putStudent(@RequestBody Student student) {
+        return ResponseEntity.ok(studentService.putStudent(student));
     }
 
     @GetMapping("/age/{age}")
