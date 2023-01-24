@@ -18,8 +18,8 @@ public class FacultyController {
     }
 
     @PostMapping
-    public Faculty postFaculty(@RequestBody Faculty faculty) {
-        return facultyService.postFaculty(faculty);
+    public ResponseEntity<Faculty> postFaculty(@RequestBody Faculty faculty) {
+        return ResponseEntity.ok(facultyService.postFaculty(faculty));
     }
 
     @DeleteMapping("{id}")
