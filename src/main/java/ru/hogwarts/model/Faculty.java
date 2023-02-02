@@ -6,7 +6,6 @@ import java.util.*;
 import static javax.persistence.CascadeType.ALL;
 
 @Entity
-@Table(name="faculty")
 public class Faculty {
     @Id
     @GeneratedValue
@@ -15,16 +14,8 @@ public class Faculty {
     private String color;
 
 
-    @OneToMany(cascade=ALL, mappedBy="faculty")
-    private Collection<Student> students;
-
-    public Collection<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Collection<Student> students) {
-        this.students = students;
-    }
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
+    private Set<Student> students;
 
     public Faculty() {
 
@@ -70,21 +61,13 @@ public class Faculty {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return idFaculty == faculty.idFaculty && Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color);// && Objects.equals(students, faculty.students);
+        return idFaculty == faculty.idFaculty && Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color) && Objects.equals(students, faculty.students);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idFaculty, name, color); //,students);
+        return Objects.hash(idFaculty, name, color, students);
     }
 
-    @Override
-    public String toString() {
-        return "\nFaculty{" +
-                "idFaculty=" + idFaculty +
-                ", name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                ", students=" + students +
-                '}';
-    }
+
 }

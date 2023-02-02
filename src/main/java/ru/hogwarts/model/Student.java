@@ -7,13 +7,13 @@ import java.util.Objects;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     private long idStudent;
 
     private String name;
     private int age;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
@@ -64,12 +64,12 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return idStudent == student.idStudent && age == student.age && Objects.equals(name, student.name);// && Objects.equals(faculty, student.faculty);
+        return idStudent == student.idStudent && age == student.age && Objects.equals(name, student.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idStudent, name, age);//, faculty);
+        return Objects.hash(idStudent, name, age);
     }
 
     @Override

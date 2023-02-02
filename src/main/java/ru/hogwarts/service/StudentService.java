@@ -10,7 +10,8 @@ import java.util.*;
 @Service
 public class StudentService {
 
-    StudentRepository studentRepository;
+   private final StudentRepository studentRepository;
+
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -33,8 +34,7 @@ public class StudentService {
     }
 
     public Collection<Student> getStudentsFilterByAge(int age) {
-        List<Student> list = new ArrayList<>(studentRepository.findAll());
-        return list.stream().filter(e->e.getAge() == age).toList();
+        return studentRepository.findByAge(age);
     }
 
     public Collection<Student> getAllStudent() {
@@ -45,7 +45,8 @@ public class StudentService {
         return studentRepository.findByAgeBetween(min, max);
     }
 
-    public Faculty getFacultyByStudent(Student student) {
-        return studentRepository.findByIdStudent(student);
+    public Faculty getFacultyByStudent(long id) {
+        //return studentRepository.findByIdStudent(id).getFaculty();
+        return studentRepository.findFacultyByStudentId(id);
     }
 }

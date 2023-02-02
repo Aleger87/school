@@ -7,6 +7,7 @@ import ru.hogwarts.service.StudentService;
 
 import java.util.Collection;
 
+
 @RequestMapping("student")
 @RestController
 public class StudentController {
@@ -18,15 +19,18 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> postStudent(@RequestBody Student student) {
-        return ResponseEntity.ok(studentService.postStudent(student));
+      return   ResponseEntity.ok(studentService.postStudent(student));
     }
 
+
+
     @DeleteMapping("{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity deleteStudent(@PathVariable Long id) {
         Student student = studentService.getStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
+        studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 
@@ -41,7 +45,7 @@ public class StudentController {
 
 
     @PutMapping
-    public ResponseEntity putStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> putStudent(@RequestBody Student student) {
         return ResponseEntity.ok(studentService.putStudent(student));
     }
 
@@ -61,16 +65,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentsByAgeBetween(min, max));
     }
 
-    @GetMapping("{student}")
-    public ResponseEntity<Faculty> getFacultyByStudent(@PathVariable Student student ) {
-        return ResponseEntity.ok(studentService.getFacultyByStudent(student));
+    @GetMapping("/student-faculty/{id}")
+    public ResponseEntity<Faculty> getFacultyByStudent (@PathVariable Long id){
+        return ResponseEntity.ok(studentService.getFacultyByStudent(id));
     }
-
-
-
-
-
-
-
 
 }
