@@ -1,10 +1,12 @@
 package ru.hogwarts.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.model.Faculty;
 import ru.hogwarts.model.Student;
 import ru.hogwarts.service.StudentService;
 
 import java.util.Collection;
+
 
 @RequestMapping("student")
 @RestController
@@ -16,16 +18,19 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student postStudent(@RequestBody Student student) {
-        return studentService.postStudent(student);
+    public ResponseEntity<Student> postStudent(@RequestBody Student student) {
+      return   ResponseEntity.ok(studentService.postStudent(student));
     }
 
+
+
     @DeleteMapping("{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity deleteStudent(@PathVariable Long id) {
         Student student = studentService.getStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
+        studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 
@@ -40,7 +45,7 @@ public class StudentController {
 
 
     @PutMapping
-    public ResponseEntity putStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> putStudent(@RequestBody Student student) {
         return ResponseEntity.ok(studentService.putStudent(student));
     }
 
@@ -54,8 +59,15 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudent());
     }
 
+    @GetMapping("/age/between")
+    public ResponseEntity<Collection<Student>> getStudentByAgeBetween(@RequestParam(required = false) Integer min,
+                                                          @RequestParam(required = false) Integer max) {
+        return ResponseEntity.ok(studentService.getStudentsByAgeBetween(min, max));
+    }
 
-
-
+    @GetMapping("/student-faculty/{id}")
+    public ResponseEntity<Faculty> getFacultyByStudent (@PathVariable Long id){
+        return ResponseEntity.ok(studentService.getFacultyByStudent(id));
+    }
 
 }

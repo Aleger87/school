@@ -1,29 +1,34 @@
 package ru.hogwarts.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     private long idStudent;
 
     private String name;
     private int age;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
     public Student() {
 
     }
-
 
     public Student(long idStudent, String name, int age) {
         this.idStudent = idStudent;
         this.name = name;
         this.age = age;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
     }
 
     public long getIdStudent() {
@@ -42,12 +47,24 @@ public class Student {
         this.idStudent = idStudent;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return age == student.age && Objects.equals(idStudent, student.idStudent) && Objects.equals(name, student.name);
+        return idStudent == student.idStudent && age == student.age && Objects.equals(name, student.name);
     }
 
     @Override
@@ -58,9 +75,10 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + idStudent +
+                "idStudent=" + idStudent +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", faculty=" + faculty +
                 '}';
     }
 }
