@@ -29,8 +29,14 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student getStudent(long id) {
-        return studentRepository.findById(id).get();
+    public Student getStudent(Long id) {
+        //return studentRepository.findById(id).get();
+        try {
+            return studentRepository.findById(id).get();
+        } catch (Exception e) {
+            new IllegalArgumentException("Not Found");
+        }
+        return null;
     }
 
     public Collection<Student> getStudentsFilterByAge(int age) {

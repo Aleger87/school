@@ -19,8 +19,8 @@ public class FacultyController {
 
     @PostMapping
     public ResponseEntity<Faculty> postFaculty(@RequestBody Faculty faculty) {
-        facultyService.postFaculty(faculty);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(facultyService.postFaculty(faculty));
+
     }
 
     @DeleteMapping("{id}")
