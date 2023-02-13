@@ -1,18 +1,27 @@
 package ru.hogwarts.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.model.Avatar;
 import ru.hogwarts.model.Student;
 import ru.hogwarts.repository.AvatarRepository;
+import ru.hogwarts.repository.AvatarRepositoryPaging;
 import ru.hogwarts.repository.StudentRepository;
 
 
+import javax.print.attribute.standard.PageRanges;
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -22,12 +31,15 @@ public class AvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
-    StudentService studentService; // ОСТАНОВИЛСЯ ТУТ
+    StudentService studentService;
     AvatarRepository avatarRepository;
+    AvatarRepositoryPaging avatarRepositoryPaging;
 
-    public AvatarService(StudentService studentService, AvatarRepository avatarRepository) {
+
+    public AvatarService(StudentService studentService, AvatarRepository avatarRepository, AvatarRepositoryPaging avatarRepositoryPaging) {
         this.studentService = studentService;
         this.avatarRepository = avatarRepository;
+        this.avatarRepositoryPaging = avatarRepositoryPaging;
     }
 
     public void uploadAvatar(long studentId, MultipartFile avatarFile) throws IOException {
@@ -61,4 +73,13 @@ public class AvatarService {
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
+
+
+    public List<Avatar> findAll(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page-1, size);
+        return avatarRepositoryPaging.findAll(pageRequest).getContent();
+    }
+
+
 }
