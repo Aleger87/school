@@ -29,8 +29,14 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student getStudent(long id) {
-        return studentRepository.findById(id).get();
+    public Student getStudent(Long id) {
+        //return studentRepository.findById(id).get();
+        try {
+            return studentRepository.findById(id).get();
+        } catch (Exception e) {
+            new IllegalArgumentException("Not Found");
+        }
+        return null;
     }
 
     public Collection<Student> getStudentsFilterByAge(int age) {
@@ -48,5 +54,17 @@ public class StudentService {
     public Faculty getFacultyByStudent(long id) {
         //return studentRepository.findByIdStudent(id).getFaculty();
         return studentRepository.findFacultyByStudentId(id);
+    }
+
+    public Long getCountStudents() {
+        return studentRepository.getCountStudents();
+    }
+
+    public Integer getAverageAge() {
+        return studentRepository.getAverageAge();
+    }
+
+    public Collection<Student> getLastStudents(Integer countStudents) {
+        return studentRepository.getLastStudents(countStudents);
     }
 }
