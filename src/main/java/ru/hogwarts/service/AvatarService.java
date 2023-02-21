@@ -1,5 +1,7 @@
 package ru.hogwarts.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +37,7 @@ public class AvatarService {
     AvatarRepository avatarRepository;
     AvatarRepositoryPaging avatarRepositoryPaging;
 
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public AvatarService(StudentService studentService, AvatarRepository avatarRepository, AvatarRepositoryPaging avatarRepositoryPaging) {
         this.studentService = studentService;
@@ -43,6 +46,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method for upload avatar");
         Student student = studentService.getStudent(studentId);
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -66,17 +70,20 @@ public class AvatarService {
 
 
     public Avatar findAvatar(long studentId) {
+        logger.info("Was invoked method for find avatar");
        return avatarRepository.findByStudentIdStudent(studentId).orElse(new Avatar());
 
     }
 
     private String getExtensions(String fileName) {
+        logger.info("Was invoked method for get extensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
 
 
     public List<Avatar> findAll(Integer page, Integer size) {
+        logger.info("Was invoked method for find all");
         PageRequest pageRequest = PageRequest.of(page-1, size);
         return avatarRepositoryPaging.findAll(pageRequest).getContent();
     }

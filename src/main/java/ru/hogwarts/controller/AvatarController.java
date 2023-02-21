@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 public class AvatarController {
 
-    AvatarService avatarService;
+    private AvatarService avatarService;
     private final AvatarRepository avatarRepository;
 
     public AvatarController(AvatarService avatarService,
