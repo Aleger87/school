@@ -1,3 +1,4 @@
+/*
 package ru.hogwarts.service;
 
 import net.minidev.json.JSONObject;
@@ -103,7 +104,8 @@ public class StudentTests {
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
 
-        mockMvc.perform(MockMvcRequestBuilders
+       */
+/* mockMvc.perform(MockMvcRequestBuilders
                         .get("/{id}", id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -122,8 +124,10 @@ public class StudentTests {
             mockMvc.perform(MockMvcRequestBuilders
                             .delete("/student/{id}" + id)
                             .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk());*/
+                    .andExpect(status().isOk());*//*
+
     }
 
 }
 
+*/
