@@ -33,11 +33,11 @@ public class AvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
-    StudentService studentService;
-    AvatarRepository avatarRepository;
-    AvatarRepositoryPaging avatarRepositoryPaging;
+   private StudentService studentService;
+   private AvatarRepository avatarRepository;
+   private AvatarRepositoryPaging avatarRepositoryPaging;
 
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+   private Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public AvatarService(StudentService studentService, AvatarRepository avatarRepository, AvatarRepositoryPaging avatarRepositoryPaging) {
         this.studentService = studentService;

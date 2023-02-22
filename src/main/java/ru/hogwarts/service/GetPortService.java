@@ -1,5 +1,5 @@
 package ru.hogwarts.service;
 
-public interface GetPort {
+public interface GetPortService {
     Integer getPort();
 }

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Profile("production")
-public class GetPortImp implements GetPort {
-    Logger logger = LoggerFactory.getLogger(GetPortImp.class);
+public class GetPortServiceImp implements GetPortService {
+    private Logger logger = LoggerFactory.getLogger(GetPortServiceImp.class);
 
     @Value("${server.port}")
-    int port;
+    private Integer port;
 
     @Override
     public Integer getPort() {

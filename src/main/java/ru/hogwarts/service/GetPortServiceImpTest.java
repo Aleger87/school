@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Profile("!production")
-public class GetPortImpTest implements GetPort{
+public class GetPortServiceImpTest implements GetPortService {
 
-    Logger logger = LoggerFactory.getLogger(GetPortImp.class);
+    private Logger logger = LoggerFactory.getLogger(GetPortServiceImp.class);
 
     @Value("${server.port}")
     private Integer port;
