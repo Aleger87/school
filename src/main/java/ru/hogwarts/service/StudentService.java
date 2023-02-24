@@ -8,6 +8,7 @@ import ru.hogwarts.model.Student;
 import ru.hogwarts.repository.StudentRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -80,5 +81,38 @@ public class StudentService {
     public Collection<Student> getLastStudents(Integer countStudents) {
         logger.info("Was invoked method for get last students");
         return studentRepository.getLastStudents(countStudents);
+    }
+
+    public Collection<String> getStudentsByFirstChar1(Character firstChar) {
+        logger.info("Was invoked method for get Students By FirstChar1");
+        List<String> students = new ArrayList<>(studentRepository.getStudentsByFirstChar(firstChar));
+        return students.stream().map(s -> {
+            return s.toUpperCase();
+        }).collect(Collectors.toList());
+
+
+
+    }
+
+    public Collection<String> getStudentsByFirstChar2(Character firstChar) {
+
+        logger.info("Was invoked method for get Students By FirstChar2");
+
+        List<String> stringList = new ArrayList<>(studentRepository.findAll().stream()
+                .parallel()
+                .filter(e->e.getName().charAt(0) == firstChar)
+                .map(student -> {return student.getName().toUpperCase();})
+                .collect(Collectors.toList()));
+        return stringList;
+    }
+
+    public Double getAverageAgeOfStream() {
+        logger.info("Was invoked method for get Average Age Of Stream");
+        List<Student> students = new ArrayList<>(studentRepository.findAll());
+        return students.stream()
+                .parallel()
+                .mapToDouble(e -> e.getAge())
+                .average()
+                .getAsDouble();
     }
 }

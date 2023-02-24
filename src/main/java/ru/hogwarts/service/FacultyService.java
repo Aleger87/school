@@ -9,6 +9,7 @@ import ru.hogwarts.repository.FacultyRepository;
 import ru.hogwarts.repository.StudentRepository;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 @Service
@@ -58,5 +59,17 @@ public class FacultyService {
     public Collection<Student> getFacultyStudents(long id) {
         logger.info("Was invoked method for faculty students");
         return studentRepository.findStudentByFacultyId(id);
+    }
+
+    public String getLongNameFaculty() {
+        logger.info("Was invoked method for get long name faculty");
+        String longNameFaculty = "";
+        return facultyRepository.findAll().stream()
+                .parallel()
+                .map(faculty -> {
+                    return faculty.getName();
+                })
+                .max(Comparator.comparingInt(String::length))
+                .orElse(null);
     }
 }
