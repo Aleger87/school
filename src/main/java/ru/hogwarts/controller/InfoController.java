@@ -28,7 +28,8 @@ public class InfoController {
     @GetMapping("/number/{triangularNumber}")
     public ResponseEntity<Integer> getSum(@PathVariable Integer triangularNumber) {
         return ResponseEntity.ok(getPortService.triangularNumber(triangularNumber));
-
     }
+
+
 
 }

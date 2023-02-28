@@ -101,4 +101,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAverageAgeOfStream());
     }
 
+    @GetMapping("/students-by-threads")
+    public void runThread(){
+        studentService.threadStart();
+    }
+
 }

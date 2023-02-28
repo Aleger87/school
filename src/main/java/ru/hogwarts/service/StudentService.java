@@ -15,6 +15,9 @@ public class StudentService {
    private Logger logger = LoggerFactory.getLogger(StudentService.class);
    private final StudentRepository studentRepository;
 
+   private List<Student> students = new ArrayList<>();
+
+
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -115,4 +118,44 @@ public class StudentService {
                 .average()
                 .getAsDouble();
     }
+
+
+    public void threadStart() {
+        logger.info("Was invoked method for thread start. ");
+        int COUNT_THREAD = 3;
+        students = new ArrayList<>(studentRepository.findAll());
+        int n = students.size();
+
+        List<Student> students1 = students.subList(0, (n / COUNT_THREAD));
+        List<Student> students2 = students.subList((n / COUNT_THREAD), (n / COUNT_THREAD) + n/COUNT_THREAD);
+        List<Student> students3 = students.subList((n / COUNT_THREAD) + n/COUNT_THREAD, n);
+
+        students1.stream().forEach(s-> System.out.println(s.getName()));
+
+        List.of(students2, students3).stream()
+               // .parallel()
+                .forEach(t->creatThreadPrint((List<Student>) t));
+
+    }
+
+
+    private void creatThreadPrint(List<Student> s) {
+        logger.info("Was invoked method for create thread ");
+        new Thread(() -> {
+            print(s, true);   // синхронизация потоков
+        }).start();
+
+    }
+
+    private void print (List<Student> st, boolean synchr) {
+        if (synchr) {
+            logger.info("Was invoked method for print where streams synchronized ");
+            synchronized(students){
+                st.stream().forEach(s-> System.out.println(s.getName()));
+            }
+        }else{
+            st.stream().forEach(s-> System.out.println(s.getName()));
+        }
+    }
+
 }
