@@ -33,4 +33,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "select * from Student order by id_student desc  limit :countStudents",nativeQuery = true)
     public Collection<Student> getLastStudents(@Param("countStudents") Integer countStudents);
+
+    @Query(value = "select a.name from Student a where a.name like concat(:firstChar,'%') order by a.name", nativeQuery = true)
+    public Collection<String> getStudentsByFirstChar(@Param("firstChar")Character firstChar);
 }

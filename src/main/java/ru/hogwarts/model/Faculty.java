@@ -13,7 +13,6 @@ public class Faculty {
     private String name;
     private String color;
 
-
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private Set<Student> students;
 
@@ -54,6 +53,16 @@ public class Faculty {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "idFaculty=" + idFaculty +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", students=" + students +
+                '}';
     }
 
     @Override

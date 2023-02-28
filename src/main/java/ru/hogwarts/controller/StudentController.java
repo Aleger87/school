@@ -50,7 +50,7 @@ public class StudentController {
     }
 
     @GetMapping("/age/{age}")
-    public ResponseEntity<Collection<Student>> filterByAge(@PathVariable int age) {
+    public ResponseEntity<Collection<Student>> filterByAge(@PathVariable Integer age) {
         return ResponseEntity.ok(studentService.getStudentsFilterByAge(age));
     }
 
@@ -86,7 +86,24 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getLastStudents(countStudents));
     }
 
+    @GetMapping("/find-students-by-char1/{char}")
+    public ResponseEntity<Collection<String>> getStudentsByFirstChar1(@PathVariable("char") Character firstChar){
+        return ResponseEntity.ok(studentService.getStudentsByFirstChar1(firstChar));
+    }
 
+    @GetMapping("/find-students-by-char2/{char}")
+    public ResponseEntity<Collection<String>> getStudentsByFirstChar2(@PathVariable("char") Character firstChar){
+        return ResponseEntity.ok(studentService.getStudentsByFirstChar2(firstChar));
+    }
 
+    @GetMapping("/average-age-of-students")
+    public ResponseEntity<Double> getAverageAger () {
+        return ResponseEntity.ok(studentService.getAverageAgeOfStream());
+    }
+
+    @GetMapping("/students-by-threads")
+    public void runThread(){
+        studentService.threadStart();
+    }
 
 }
